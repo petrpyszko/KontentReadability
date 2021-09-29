@@ -1,0 +1,16 @@
+import { IQueryParameter } from './url.models';
+export declare namespace Parameters {
+    class CustomParameter implements IQueryParameter {
+        name: string;
+        value: string;
+        /**
+         * Custom parameter
+         * @constructor
+         * @param {string} name - Name of the parameter
+         * @param {string} value - Value of the parameter
+         */
+        constructor(name: string, value: string);
+        getParam(): string;
+        getParamValue(): string;
+    }
+}

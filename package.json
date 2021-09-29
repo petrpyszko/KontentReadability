@@ -1,0 +1,26 @@
+{
+  "name": "kontentreadability",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-modules --experimental-specifier-resolution=node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@kentico/kontent-delivery": "^10.4.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babelify": "^10.0.0",
+    "natural": "^5.1.1",
+    "pronouncing": "github:aparrish/pronouncingjs",
+    "rxjs": "^7.3.0",
+    "sbd": "^1.0.19",
+    "syllable": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1"
+  }
+}

@@ -1,0 +1,2 @@
+import { ISDKInfo } from '.';
+export declare const sdkInfo: ISDKInfo;

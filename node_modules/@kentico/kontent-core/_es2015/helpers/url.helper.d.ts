@@ -1,0 +1,10 @@
+import { IQueryParameter } from '../models';
+export declare class UrlHelper {
+    /**
+   * Adds query parameters to given url
+   * @param url Url to which options will be added
+   * @param options Query parameters to add
+   */
+    addOptionsToUrl(url: string, options?: IQueryParameter[]): string;
+}
+export declare const urlHelper: UrlHelper;

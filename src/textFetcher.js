@@ -1,13 +1,13 @@
-import { DeliveryClient } from "@kentico/kontent-delivery";
+const delivery = require("@kentico/kontent-delivery");
 
-export class RichTextClient {
+class RichTextClient {
     constructor(projectId, apiKey) {
-        this.deliveryClient = new DeliveryClient({
+        this.deliveryClient = new delivery.DeliveryClient({
             projectId: projectId,
             previewApiKey: apiKey,
             globalQueryConfig: {
                 // Ensures that Preview API is used
-                usePreviewMode: false
+                usePreviewMode: !!apiKey
             }
         });
     }
@@ -21,8 +21,13 @@ export class RichTextClient {
                     .elementsParameter([richTextElementCodename])
                     .toPromise()
                     .then(response => {
-                        let htmlContent = response.items[0][richTextElementCodename].value;
-                        let content = this._removeHTML(htmlContent);
+                        if(!response.items[0] || !response.items[0][richTextElementCodename]) {
+                          reject({message: "Wrong itemId or element codename."})
+                          return;
+                        }
+
+                        let element = response.items[0][richTextElementCodename];
+                        let content = this._removeHTML(element.value);
                         resolve(content);
                     });
             } catch (error) {
@@ -36,3 +41,5 @@ export class RichTextClient {
         return htmless.replace(/&nbsp;/gi, " ");
     }
 }
+
+module.exports = RichTextClient;

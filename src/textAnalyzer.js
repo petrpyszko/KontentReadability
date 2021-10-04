@@ -1,17 +1,26 @@
-const pronouncing = require("../lib/pronouncing-browser");
 const natural = require("natural");
 const syl = require('syllabificate');
+const syllables = require('syllables');
 
+const logPerformance = false;
 
 function getScoring(text) {
+
+  logPerformance && console.time("sentences")
   const sentences = getSentences(text);
   const totalSentences = sentences.length;
-  const sentencesOfWords = sentences.map(s => getWordsInSentence(s));
-  const totalWords = sentencesOfWords.reduce((prev, words) => prev + words.length, 0);
-  const totalSyllables = sentencesOfWords.reduce(
-    (prev, words) => prev + words
-      .reduce((prev, word) => prev + getSyllableCountInWord(word), 0),
-    0);
+  logPerformance && console.timeEnd("sentences");
+
+
+  logPerformance && console.time("words");
+  let words = [];
+  sentences.forEach(s => words = words.concat(getWordsInSentence(s)));
+  const totalWords = words.length;
+  logPerformance && console.timeEnd("words")
+
+  logPerformance && console.time("syll");
+  const totalSyllables = words.reduce((prev, word) => prev + getSyllableCountInWord(word), 0);
+  logPerformance && console.timeEnd("syll");
 
   return {
     flesch: 206.835 - (1.015 * (totalWords / totalSentences)) - (84.6 * (totalSyllables / totalWords)),
@@ -19,7 +28,7 @@ function getScoring(text) {
     sentences: totalSentences,
     words: totalWords,
     syllables: totalSyllables,
-    syllables_per_word:  totalSyllables / totalWords
+    syllables_per_word: totalSyllables / totalWords
   };
 }
 
@@ -33,18 +42,14 @@ function getWordsInSentence(sentence) {
 }
 
 function getSyllableCountInWord(word) {
-  const phones = pronouncing.phonesForWord(word.toLowerCase());
-  if (phones && phones.length) {
-
-    const byDictionary = Math.min(phones.map(p => pronouncing.syllableCount(p)));
-    if (byDictionary) {
-      return byDictionary;
-    }
+  const byDictionary = syllables(word);
+  if (byDictionary) {
+    return byDictionary;
   }
 
-  const bySyllableLibrary = syl.countSyllables(word);
-  if (bySyllableLibrary) {
-    return bySyllableLibrary;
+  const bySyllableMatchingLibrary = syl.countSyllables(word);
+  if (bySyllableMatchingLibrary) {
+    return bySyllableMatchingLibrary;
   }
 
   const byRegex = getSyllablesCountByRegex(word);
@@ -56,7 +61,6 @@ function getSyllableCountInWord(word) {
 
 function getSyllablesCountByRegex(word) {
   word = word.toLowerCase();
-  //if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
   word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
   word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')
   const match = word.match(/[aeiouy]{1,2}/g);

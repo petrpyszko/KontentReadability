@@ -10,9 +10,9 @@
   "dependencies": {
     "@kentico/kontent-delivery": "^10.4.1",
     "natural": "^5.1.1",
-    "pronouncing": "github:aparrish/pronouncingjs",
     "rxjs": "^7.3.0",
-    "syllabificate": "^2.0.3"
+    "syllabificate": "^2.0.3",
+    "syllables": "^1.0.0"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",

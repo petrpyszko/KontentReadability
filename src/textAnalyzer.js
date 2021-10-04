@@ -1,4 +1,4 @@
-const pronouncing = require("pronouncing");
+const pronouncing = require("../lib/pronouncing-browser");
 const natural = require("natural");
 const syl = require('syllabificate');
 

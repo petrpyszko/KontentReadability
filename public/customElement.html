@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kontent readability</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <script src="/public/customElement.js"></script>
+  <link href="/public/custom-element.css" rel="stylesheet" type="text/css">
+  <style>
+    body {
+      margin: 0;
+      padding: 8px;
+      overflow: hidden;
+    }
+    @-moz-keyframes spin {
+      0% {
+        -moz-transform: rotate(0deg);
+      }
+      100% {
+        -moz-transform: rotate(359deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(359deg);
+      }
+    }
+    @-o-keyframes spin {
+      0% {
+        -o-transform: rotate(0deg);
+      }
+      100% {
+        -o-transform: rotate(359deg);
+      }
+    }
+    @-ms-keyframes spin {
+      0% {
+        -ms-transform: rotate(0deg);
+      }
+      100% {
+        -ms-transform: rotate(359deg);
+      }
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(359deg);
+      }
+    }
+    .spinning {
+      display: inline-block;
+      -webkit-animation: spin 1.25s infinite linear;
+      -moz-animation: spin 1.25s infinite linear;
+      -o-animation: spin 1.25s infinite linear;
+      animation: spin 1.25s infinite linear;
+    }
+    .icon-margin{
+      margin-right: 8px;
+    }
+    .status-wrapper {
+      display: flex;
+      line-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Readability score:</h3>
+  <div class="status-wrapper u-spacing-l" id="loading">
+    <i class="icon-spinner spinning icon-margin" aria-hidden="true"></i>
+    <span class="score-status">Calculating the readability score...</span>
+  </div>
+  <div class="status-wrapper u-spacing-l" id="ready" style="display: none">
+    <i class="icon-check-circle status--is-ready icon-margin" aria-hidden="true"></i>
+    <span class="score-status">Score ready</span>
+  </div>
+</body>
+</html>

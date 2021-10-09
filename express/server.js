@@ -9,15 +9,14 @@ const RichTextClient = require('../src/textFetcher.js');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('<h1>TODO: serve custom element</h1>');
-  res.end();
+ res.sendFile(path.join(__dirname, '../public/customElement.html'));
 });
+
 router.get('/count-score', async (req, res) => {
   const projectId = process.env.PROJECT_ID || '37c18c01-6a77-4f04-bbfb-2a262469b629';
   const apiKey = process.env.PREVIEW_API_KEY;
   const itemId = req.query.itemId || "39296026-6cfd-4543-bf4f-c402aa7b4749";
-  const elementId = req.query.elementId || "rt";
+  const elementId = req.query.element || "rt";
 
   try {
     const client = new RichTextClient(projectId, apiKey);
@@ -34,9 +33,12 @@ router.get('/count-score', async (req, res) => {
 
 router.post('/', (req, res) => res. json({ postBody: req.body }));
 
+app.use('/public/', express.static('public'));
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+
+
 
 
 module.exports = app;

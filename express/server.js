@@ -9,7 +9,7 @@ const RichTextClient = require('../src/textFetcher.js');
 const router = express.Router();
 
 router.get('/', (req, res) => {
- res.sendFile(path.join(__dirname, '../public/customElement.html'));
+ //res.sendFile('/public/customElement.html');
 });
 
 router.get('/count-score', async (req, res) => {

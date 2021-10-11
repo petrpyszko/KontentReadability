@@ -13,10 +13,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/count-score', async (req, res) => {
-  const projectId = process.env.PROJECT_ID || '37c18c01-6a77-4f04-bbfb-2a262469b629';
+  const projectId = process.env.PROJECT_ID;
   const apiKey = process.env.PREVIEW_API_KEY;
-  const itemId = req.query.itemId || "39296026-6cfd-4543-bf4f-c402aa7b4749";
-  const elementId = req.query.element || "rt";
+  const itemId = req.query.itemId;
+  const elementId = req.query.element;
+
+  if (!projectId) {
+    res.status(400).json("Specify PROJECT_ID and PREVIEW_API_KEY env variable.");
+    return;
+  }
 
   try {
     const client = new RichTextClient(projectId, apiKey);

@@ -21,7 +21,7 @@ function updateSize() {
   }
 }
 
-const onSourceChanged = _.debounce(reFetchScore, 2000);
+const onSourceChanged = _.debounce(reFetchScore, 5000);
 
 try {
   CustomElement.init((element, _context) => {
@@ -34,6 +34,7 @@ try {
   });
 }
 catch (err) {
+  reFetchScore();
   console.error(err);
 }
 

@@ -16,22 +16,26 @@ function reFetchScore() {
 
 function updateSize() {
   const height = Math.ceil($("html").height());
-  CustomElement.setHeight(height);
+  if (height > 0) {
+    CustomElement.setHeight(height);
+  }
 }
 
 const onSourceChanged = _.debounce(reFetchScore, 2000);
 
-if (window.CustomElement) {
+try {
   CustomElement.init((element, _context) => {
     elementCodename = element.config.elementCodename;
     itemId = _context.item.id;
+
+    updateSize();
     CustomElement.observeElementChanges([elementCodename], (_codenames) => onSourceChanged())
     reFetchScore();
   });
 }
-
-updateSize();
-
+catch (err) {
+  console.error(err);
+}
 
 
 

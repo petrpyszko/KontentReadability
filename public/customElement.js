@@ -14,6 +14,11 @@ function reFetchScore() {
     });
 }
 
+function updateSize() {
+  const height = Math.ceil($("html").height());
+  CustomElement.setHeight(height);
+}
+
 const onSourceChanged = _.debounce(reFetchScore, 2000);
 
 if (window.CustomElement) {
@@ -21,11 +26,11 @@ if (window.CustomElement) {
     elementCodename = element.config.elementCodename;
     itemId = _context.item.id;
     CustomElement.observeElementChanges([elementCodename], (_codenames) => onSourceChanged())
+    reFetchScore();
   });
 }
 
-reFetchScore();
-
+updateSize();
 
 
 

@@ -33,7 +33,6 @@ function getScoring(text) {
   const totalSyllables = words.reduce((prev, word) => prev + getSyllableCountInWord(word), 0);
   logPerformance && console.timeEnd("syll");
 
-
   const flesch = 206.835 - (1.015 * (totalWords / totalSentences)) - (84.6 * (totalSyllables / totalWords));
   const flesch_kincaid = (0.39 * (totalWords / totalSentences)) + (11.8 * (totalSyllables / totalWords)) - 15.59;
 
@@ -49,7 +48,7 @@ function getScoring(text) {
 }
 
 function getSentences(str) {
-  const tokenizer = new natural.SentenceTokenizer();
+  const tokenizer = new natural.SentenceTokenizerNew();
   return tokenizer.tokenize(str);
 }
 
@@ -141,16 +140,16 @@ function getKincaidLevel(score) {
 
 function logSyllablesInSentences(text) {
   const sentences = getSentences(text);
+  console.log(sentences);
+  console.log(text);
 
   sentences.forEach(s => {
     const sentence = getWordsInSentence(s);
     const wordsWithSyllables = sentence.map(w => {
       return w + " - " + getSyllableCountInWord(w);
     });
-    console.log(wordsWithSyllables);
   });
 
-  console.log(getScoring(text));
 }
 
 module.exports = {getScoring};
